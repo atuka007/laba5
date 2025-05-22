@@ -1,8 +1,6 @@
 import math
 import time
-from functools import lru_cache
 
-@lru_cache(maxsize=None) # Кеш функции recur_f
 def recur_f(n):  # Рекурсивная реализация
     if n == 1:
         return 1
@@ -46,21 +44,14 @@ def measure_time(func, n, repetitions=100):  # Функция для измер�
 def compare_approaches(max_n):  # Сравнительный анализ
     print("n\tРекурсивно (мс)\tИтерационно (мс)\tОптимизировано (мс)")
     for n in range(1, max_n + 1):
-        try:
-            if n <= 20:
-                rec_time = measure_time(recur_f, n) * 1000
-            else:
-                rec_time = float('inf')
+        if n <= 20:
+            rec_time = measure_time(recur_f, n) * 1000
+        else:
+            rec_time = float('inf')
 
-            it_time = measure_time(iter_f, n) * 1000
-            opt_time = measure_time(optimized_iter_f, n) * 1000
+        it_time = measure_time(iter_f, n) * 1000
+        opt_time = measure_time(optimized_iter_f, n) * 1000
 
-            print(f"{n}\t{rec_time:.6f}\t\t{it_time:.6f}\t\t{opt_time:.6f}")
-        except (RecursionError, OverflowError) as e:
-            print(f"{n}\tОшибка: {str(e)[:15]}...\t{it_time:.6f}\t\t{opt_time:.6f}")
-            continue
-        except Exception as e:
-            print(f"{n}\tНеожиданная ошибка: {str(e)[:15]}...")
-            continue
+        print(f"{n}\t{rec_time:.6f}\t\t{it_time:.6f}\t\t{opt_time:.6f}")
 
 compare_approaches(20)  # Выполняем сравнение для n от 1 до 20
