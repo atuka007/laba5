@@ -15,11 +15,9 @@ def iter_f(n):  # Оптимизированная итерационная ре
     current_2n_fact = 2  # (2*1)! = 2! = 2
 
     for i in range(2, n + 1):
-        sign = -1 if i % 2 == 0 else 1  # Вычисляем текущий факториал (i-1)!
-        if i > 2:
-            prev_fact *= (i - 2)
-        for j in range(2 * (i - 1) + 1, 2 * i + 1):  # Вычисляем (2i)! используя предыдущее значение (2(i-1))!
-            current_2n_fact *= j
+        sign = -1 if i % 2 == 0 else 1
+        prev_fact *= (i - 1)
+        current_2n_fact *= (2 * (i - 1)) * (2 * (i - 1) + 1)
 
         term = prev_fact / current_2n_fact
         result = sign * (result + term)
